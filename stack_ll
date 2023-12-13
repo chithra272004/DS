@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node* next;
+};
+
+struct node *top, *newnode, *temp ;
+
+void push();
+void pop();
+void display();
+
+void main()
+{
+    int choice;
+    top=NULL;
+    while (1) {
+        printf("Menu for stack operations");
+        printf("\n\t1 Push\n");
+        printf("\t2 Pop\n");
+        printf("\t3 Display\n");
+        printf("\t4 Exit\n");
+        printf("Enter Choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                push();
+                break;
+            case 2:
+                pop();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                exit(1);
+                break;
+            default:
+                printf("Incorrect Choice\n");
+        }
+    }
+}
+
+void push()
+{
+ 
+        int data;
+        newnode = (struct node*)malloc(sizeof(struct node));
+        if (newnode == NULL) 
+            {
+                printf("Unable to allocate memory.");
+            }
+        else
+        {
+            printf("\nEnter number to  be inserted : ");
+            scanf("%d", &data);
+            newnode->data = data;
+            if (top==NULL)
+            {
+                top=newnode;
+                newnode->next=NULL;
+            }
+            else
+            {
+               newnode->next=top;
+               top=newnode;
+            }
+        }    
+}
+void pop()
+{
+    if(top==NULL)
+        printf("Underflow");
+    else
+    {
+        temp=top;
+        printf("Deleted element->%d",top->data);
+        top=top->next;
+        free(temp);
+    }
+    printf("\n");
+   
+}
+        
+void display()
+{
+    struct node* temp;
+ 
+    // List is empty
+    if (top == NULL)
+        printf("\nStack is empty\n");
+ 
+    // Else print the LL
+    else {
+        temp = top;
+        while (temp != NULL) 
+        {
+            printf("Data = %d\n", temp->data);
+            temp = temp->next;
+        }
+    }
+    printf("\n");
+}
+       
+        
