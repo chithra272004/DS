@@ -1,0 +1,208 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node* next;  
+};
+
+struct node *head=NULL;
+
+void traverse();
+void insertAtFront();
+void insertAtEnd();
+void insertAtPosition();
+void deleteFirst();
+void deleteEnd();
+void deletePosition();
+void main()
+{
+    int choice;
+    while (choice!=8) {
+
+        printf("\t1 For insertion at Front\n");
+        printf("\t2 For insertion at end\n");
+        printf("\t3 For insertion at any position\n");
+        printf("\t4 For deletion at front\n");
+        printf("\t5 For deletion at end\n");
+        printf("\t6 For deletion at any position\n");
+        printf("\t7 To see list\n");
+        printf("\t8 To exit\n");
+        printf("Enter Choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                insertAtFront();
+                break;
+            case 2:
+                insertAtEnd();
+                break;
+            case 3:
+                insertAtPosition();
+                break;
+            case 4:
+                deleteFirst();
+                break;
+            case 5:
+                deleteEnd();
+                break;
+            case 6:
+                deletePosition();
+                break;    
+            case 7:
+                traverse();
+                break;
+            case 8:printf("Exit");
+                    break;
+        }
+    }
+}
+
+void traverse()
+{
+    struct node* temp;
+    int data;
+    if(head==NULL)
+        printf("List Empty");
+    else
+    {
+        temp=head;
+        while(temp!=NULL)
+        {
+            printf("%d\n",temp->data);
+            temp=temp->next;
+        }
+    }
+}
+void insertAtFront()
+{
+    int data;
+    struct node* newnode;
+    newnode = (struct node*)malloc(sizeof(struct node));
+    if(newnode==NULL)
+    {
+        printf("Cannot allocate memory");
+        return;
+    }
+    printf("Enter the element to be inserted");
+    scanf("%d",&data);
+    newnode->data=data;
+    if(head==NULL)
+    {
+        newnode->next=NULL;
+        head=newnode;
+    }
+    else
+    {
+        newnode->next=head;
+        head=newnode;
+    }
+}
+void insertAtEnd()
+{
+    int data;
+    struct node* temp, * newnode;
+    newnode = (struct node*)malloc(sizeof(struct node));
+    if(newnode==NULL)
+    {
+        printf("Cannot allocate memory");
+        return;
+    }
+    printf("Enter the element to be inserted");
+    scanf("%d", &data);
+    newnode->data=data;
+    temp=head;
+    if(head==NULL)
+    {
+        newnode->next=NULL;
+        head=newnode;
+    }
+    else
+    {
+        newnode->next=NULL;
+        while(temp->next!=NULL)
+        {
+            temp=temp->next;
+        }
+        temp->next=newnode;
+    }
+}
+void insertAtPosition()
+{
+    struct node* newnode, * temp;
+    newnode = (struct node*)malloc(sizeof(struct node));
+    int data, pos, i=1;
+    if(newnode==NULL)
+    {
+        printf("Cannot allocate memory");
+        return;
+    }
+    printf("Enter the element to be inserted");
+    scanf("%d", &data);
+    printf("Enter the position");
+    scanf("%d", &pos);
+    newnode->data=data;
+    temp=head;
+    if(head==NULL)
+    {
+        newnode->next=NULL;
+        head=newnode;
+    }
+    else
+    {
+        while(i<pos-1)
+        {
+            temp=temp->next;
+            i++;
+        }
+        newnode->next=temp->next;
+        temp->next=newnode;
+    }
+}
+void deleteFirst()
+{
+    struct node* temp;
+    if(head==NULL)
+        printf("List is empty");
+    else
+    {
+        temp= head;
+        head=head->next;
+        free(temp);
+    }
+}
+void deleteEnd()
+{
+    struct node* temp, *prev;
+    temp=head;
+    if(head==NULL)
+        printf("List is empty");
+    else
+    {
+        while(temp->next!=NULL)
+        {
+            prev=temp;
+            temp=temp->next;
+        }
+        free(temp);
+        prev->next=NULL;
+    }
+}
+void deletePosition()
+{
+    struct node* temp, * prev;
+    int i=1, pos;
+    if(head==NULL)
+        printf("List is empty");
+    printf("Enter the position");
+    scanf("%d",&pos);
+    temp=head;
+    while(i<pos)
+    {
+        prev=temp;
+        temp=temp->next;
+        i++;
+    }
+    prev->next=temp->next;
+    free(temp);
+}
