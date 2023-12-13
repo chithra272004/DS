@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node
+{
+    struct node* next;
+    int data;
+};
+void enqueue();
+void dequeue();
+void display();
+struct node* rear, * front ,* temp, * newnode;
+void main()
+{
+        int choice;
+    front=rear=NULL;
+    while (choice!=4) 
+    {
+        printf("Menu for Queue operations");
+        printf("\n\t1 Enqueue\n");
+        printf("\t2 Dequeue\n");
+        printf("\t3 Display\n");
+        printf("\t4 Exit\n");
+        printf("Enter Choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) 
+        {
+            case 1:
+                enqueue();
+                break;
+            case 2:
+                dequeue();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                printf("Exit");
+                break;
+            default:
+                printf("Incorrect Choice\n");
+        }
+    }
+}
+void enqueue()
+{
+    int data;
+    newnode=(struct node*)malloc(sizeof(struct node));
+    if(newnode==NULL)
+    {
+        printf("Memory cannot be allocated");
+        return;
+    }
+    printf("Enter the elment to be inserted");
+    scanf("%d",&data);
+    newnode->data=data;
+    newnode->next=NULL;
+    if(front==NULL&&rear==NULL)
+    {
+        front=rear=newnode;
+    }
+    else
+    {
+        rear->next=newnode;
+        rear=newnode;
+    }
+}
+void dequeue()
+{
+    if(rear==NULL&&front==NULL)
+    {
+        printf("Empty");
+        return;
+    }
+    if(front==rear)
+    {
+        front=rear=NULL;
+    }
+    else
+    {
+        temp=front;
+        front=front->next;
+        free(temp);
+    }
+}
+void display()
+{
+    if(front==NULL&&rear==NULL)
+        printf("Empty");
+    else
+    {
+        temp=front;
+        while(temp!=NULL)
+        {
+            printf("%d\n", temp->data);
+            temp=temp->next;
+        }
+    }
+}
